@@ -4,18 +4,39 @@ import FloatingCartButton from "./FloatingCartButton"
 import Location from "./Location"
 import Item from "./Item"
 import TopBar from "./TopBar"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
-export default function MarketPage() {
+export default function MarketPage({ token }) {
+  const [foods, setFoods] = useState([])
+
+  useEffect(() => {
+    const URL = "https://mock-api.driven.com.br/api/v2/camppi/items/"
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    const promise = axios.get(URL, config)
+
+    promise.then((res) => setFoods(res.data))
+    promise.catch((err) => console.log(err.response.data))
+  }, [])
+
   return (
     <Container>
       <TopBar />
       <Location />
-
-        <Item title="Doce de Leite" description="Delicioso doce de leite cremoso, made in roça." image="https://imagens2.ne10.uol.com.br/blogs-interior/cotidiano/uploads/2021/11/doce-de-leite.jpg" price={19.90} />
-        <Item title="Doce de Leite" description="Delicioso doce de leite cremoso, made in roça." image="https://imagens2.ne10.uol.com.br/blogs-interior/cotidiano/uploads/2021/11/doce-de-leite.jpg" price={19.90} />
-        <Item title="Doce de Leite" description="Delicioso doce de leite cremoso, made in roça." image="https://imagens2.ne10.uol.com.br/blogs-interior/cotidiano/uploads/2021/11/doce-de-leite.jpg" price={19.90} />
-        <Item title="Doce de Leite" description="Delicioso doce de leite cremoso, made in roça." image="https://imagens2.ne10.uol.com.br/blogs-interior/cotidiano/uploads/2021/11/doce-de-leite.jpg" price={19.90} />
-
+      {foods.map(f => (
+        <Item
+          key={f.id}
+          title={f.name}
+          description={f.description}
+          image={f.image}
+          price={f.price} />
+      ))}
       <FloatingCartButton />
     </Container>
   )
