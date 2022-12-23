@@ -1,16 +1,19 @@
 import axios from "axios"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-
 import BigLogo from "./BigLogo"
 import Button from "./Button"
 import Input from "./Input"
+import AuthContext from "../contexts/AuthContext"
+import UserContext from "../contexts/UserContext"
 
-export default function LoginPage({ setToken }) {
+export default function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
+  const { setToken } = useContext(AuthContext)
+  const { setUser } = useContext(UserContext)
 
   function login(e) {
     e.preventDefault()
@@ -19,6 +22,7 @@ export default function LoginPage({ setToken }) {
 
     const promise = axios.post(URL, body)
     promise.then((res) => {
+      setUser({ name: res.data.name, cityName: res.data.cityName, image: res.data.image })
       setToken(res.data.token)
       navigate("/market")
     })

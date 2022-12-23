@@ -60,9 +60,9 @@ export default function LoginPage() {
           required
         />
         <Grid>
-          <Button active={city === 'BH'} onClick={() => setCity("BH")}>BH</Button>
-          <Button active={city === 'RJ'} onClick={() => setCity("RJ")}>RJ</Button>
-          <Button active={city === 'SP'} onClick={() => setCity("SP")}>SP</Button>
+          <Button type="button" active={city === 'BH'} onClick={() => setCity("BH")}>BH</Button>
+          <Button type="button" active={city === 'RJ'} onClick={() => setCity("RJ")}>RJ</Button>
+          <Button type="button" active={city === 'SP'} onClick={() => setCity("SP")}>SP</Button>
         </Grid>
         <Button type="submit">Cadastrar</Button>
       </form>

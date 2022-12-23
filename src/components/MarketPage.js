@@ -1,26 +1,24 @@
 import styled from "styled-components"
-
 import FloatingCartButton from "./FloatingCartButton"
 import Location from "./Location"
 import Item from "./Item"
 import TopBar from "./TopBar"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from "axios"
+import AuthContext from "../contexts/AuthContext"
 
-export default function MarketPage({ token }) {
+export default function MarketPage() {
   const [foods, setFoods] = useState([])
+  const { token } = useContext(AuthContext)
 
   useEffect(() => {
     const URL = "https://mock-api.driven.com.br/api/v2/camppi/items/"
-
     const config = {
       headers: {
         Authorization: `Bearer ${token}`
       }
     }
-
     const promise = axios.get(URL, config)
-
     promise.then((res) => setFoods(res.data))
     promise.catch((err) => console.log(err.response.data))
   }, [])

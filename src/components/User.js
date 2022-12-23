@@ -1,10 +1,15 @@
+import { useContext } from "react"
 import styled from "styled-components"
+import UserContext from "../contexts/UserContext"
 
-export default function User({ name, image }) {
+export default function User() {
+  const { user } = useContext(UserContext)
+
+
   return (
     <Container>
-      <Text>Olá, {name}</Text>
-      <UserImage src={image} />
+      <Text>Olá, {user.name}</Text>
+      <UserImage src={user.image} />
     </Container>
   )
 }
